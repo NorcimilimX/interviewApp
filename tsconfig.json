@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "ES6",                 // Specify ECMAScript target version
+    "module": "commonjs",            // Specify module code generation (e.g., 'commonjs' or 'ESNext')
+    "rootDir": "./src",              // Root folder containing TypeScript files
+    "outDir": "./dist",              // Output folder for compiled JavaScript files
+    "strict": true,                  // Enable strict type checking
+    "esModuleInterop": true,         // Allow default imports from CommonJS modules
+    "skipLibCheck": true,            // Skip type checking for library files
+    "forceConsistentCasingInFileNames": true // Ensure consistent file name casing
+  },
+  "include": ["src/**/*"],           // Files to include in compilation
+  "exclude": ["node_modules", "dist"], // Files/folders to exclude
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    },
+    {
+      "path": "./tsconfig.app.json"
+    }
+  ]
+}
