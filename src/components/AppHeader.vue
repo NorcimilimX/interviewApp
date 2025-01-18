@@ -2,8 +2,11 @@
 import { computed, ref } from 'vue'
 import type { ComputedRef} from 'vue'
 import { useUserStore } from '@/stores/userStore'
+import { getAuth, signOut } from 'firebase/auth'
+import { useRouter } from 'vue-router'
 
 const userStore = useUserStore()
+const router = useRouter()
 
 interface IMenuItem {
   label: string,
@@ -38,9 +41,15 @@ const menuItems = ref<IMenuItem[]>([
     show: computed((): boolean => !userStore.userId)
   }
 ])
+
+const signOutMethod = async (): Promise<void> => {
+  await signOut(getAuth())
+  router.push('/auth')
+}
 </script>
 
 <template>
+  {{userStore.userId}}
   <interview-menu :model="menuItems" class="menu">
     <template #item="{ item, props }">
       <template v-if="item.show">
@@ -51,7 +60,7 @@ const menuItems = ref<IMenuItem[]>([
       </template>
     </template>
     <template #end>
-      <span v-if="userStore.userId" @click="userStore.userId=''" class="flex align-items-center menu-exit">
+      <span v-if="userStore.userId" @click="signOutMethod" class="flex align-items-center menu-exit">
         <span class="pi pi-sign-out p-menuitem-icon"></span>
         <span class="ml-2">Logout</span>
       </span>
@@ -60,7 +69,7 @@ const menuItems = ref<IMenuItem[]>([
 </template>
 
 <style>
-.p-menubar-root-list {
+/*.p-menubar-root-list {
   height: 50px;
   background-color: beige;
   width: 100%;
@@ -74,5 +83,5 @@ const menuItems = ref<IMenuItem[]>([
       font-weight: bold;
     }
   }
-}
+}*/
 </style>

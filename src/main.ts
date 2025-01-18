@@ -1,6 +1,8 @@
 import './assets/main.css'
+import 'primevue/resources/themes/saga-blue/theme.css'
+import 'primevue/resources/primevue.min.css'
 import 'primeicons/primeicons.css'
-import 'primeflex/primeflex.css'
+import 'primeflex/primeflex.min.css'
 
 import { initializeApp } from "firebase/app";
 
@@ -12,6 +14,11 @@ import router from './router'
 import PrimeVue from 'primevue/config';
 import Menubar from 'primevue/menubar';
 import Aura from '@primevue/themes/aura';
+import Button from 'primevue/button'
+import InputText from 'primevue/inputtext'
+import ToastService from 'primevue/toastservice'
+import Toast from 'primevue/toast'
+import ProgressSpinner from 'primevue/progressspinner'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -26,15 +33,25 @@ initializeApp(firebaseConfig);
 
 const app = createApp(App)
 
+app.use(ToastService)
 app.use(createPinia())
 app.use(router)
 app.use(router)
 app.use(PrimeVue)
 app.use(PrimeVue, {
   theme: {
-    preset: Aura
+    preset: Aura,
+    options: {
+      prefix: 'p',
+      darkModeSelector: 'system',
+      cssLayer: false
+    }
   }
 });
 app.component('interview-menu', Menubar)
+app.component('interview-button', Button)
+app.component('interview-inputtext', InputText)
+app.component('app-toast', Toast)
+app.component('app-progress', ProgressSpinner )
 
 app.mount('#app')
