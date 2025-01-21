@@ -49,39 +49,36 @@ const signOutMethod = async (): Promise<void> => {
 </script>
 
 <template>
-  {{userStore.userId}}
   <interview-menu :model="menuItems" class="menu">
     <template #item="{ item, props }">
       <template v-if="item.show">
-        <router-link :to="item.path" class="flex align-items-center" v-bind="props.action">
+        <router-link :to="item.path" class="flex align-items-center font-medium" v-bind="props.action">
           <span :class="item.icon" class="p-menuitem-icon"></span>
-          <span class="ml-2">{{ item.label }}</span>
+          <span>{{ item.label }}</span>
         </router-link>
       </template>
     </template>
     <template #end>
       <span v-if="userStore.userId" @click="signOutMethod" class="flex align-items-center menu-exit">
         <span class="pi pi-sign-out p-menuitem-icon"></span>
-        <span class="ml-2">Logout</span>
+        <span class="ml-2 font-medium">Logout</span>
       </span>
     </template>
   </interview-menu>
 </template>
 
 <style>
-/*.p-menubar-root-list {
-  height: 50px;
-  background-color: beige;
-  width: 100%;
-  gap: 15px!important;
-  padding-left: 10px !important;
-  padding-right: 10px !important;
+.p-menubar {
+  background-color: var(--app-main-color);
+  margin-bottom: 30px;
+}
 
-  li {
-    a {
-      font-size: 18px;
-      font-weight: bold;
-    }
+.menu-exit {
+  padding: 0.75rem 1rem;
+
+  &:hover {
+    background: var(--app-menu-item-hover-color);
+    cursor: pointer;
   }
-}*/
+}
 </style>

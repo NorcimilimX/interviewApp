@@ -1,3 +1,51 @@
+:root {
+  --app-main-color: rgba(98, 135, 143, 0.43);
+  --app-secondary-color: rgba(103, 182, 197, 0.6);
+  --app-menu-item-hover-color: rgb(233, 236, 239);
+  --app-form-input-hover-color: rgb(86, 113, 125);
+  --app-heading-color: rgb(73, 80, 87);
+}
+
+
+
 body {
   margin: 0;
+  font: 1.2rem "Fira Sans", sans-serif;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: var(--app-heading-color);
+  }
+
+  .p-card {
+    background-color: var(--app-main-color);
+    border-radius: 10px;
+  }
+
+  .form-btn {
+    vertical-align: middle;
+    border-radius: 10px;
+  }
+
+  .input {
+    width: 100%;
+    border-radius: 10px;
+    color: var(--app-heading-color);
+
+    &:hover,
+    &:focus {
+      border-color: var(--app-form-input-hover-color);
+      box-shadow: 0 0 0 0.1rem var(--app-form-input-hover-color);
+    }
+  }
+
+  .interview-form {
+    max-width: 600px;
+    margin: auto;
+    text-align: center;
+  }
 }

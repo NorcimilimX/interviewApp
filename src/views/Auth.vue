@@ -1,28 +1,29 @@
 <template>
-  <app-toast position="bottom-right"/>
+  <interview-toast position="bottom-right"/>
   <div class="flex justify-content-center p-2">
-    <div class="surface-card p-4 shadow-2 border-round w-full lg:w-6">
+    <div class="p-card p-4 shadow-2 border-round w-full lg:w-6">
       <div class="text-center mb-3">
-        <div class="text-900 text-3xl font-medium mb-3">Hello there</div>
+        <h1 class="font-bold mb-3">Hello there</h1>
         <span class="text-600 font-medium line-height-3">{{ subtitleText }}</span>
         <a class="text-600 font-medium ml-2 text-blue-500 cursor-pointer" @click="toggleAuth">
           {{linkAccountText}}
         </a>
       </div>
 
-      <form @submit.prevent="submitForm">
-        <label for="email" class="block text-900 font-medium mb-2">Email</label>
-        <interview-inputtext v-model="email" id="email1" type="email" class="w-full mb-3"/>
+      <form @submit.prevent="submitForm" class="interview-form">
+        <label for="email" class="block text-900 font-medium mb-2 text-left">Email</label>
+        <interview-input-text v-model="email" id="email1" type="email" class="input w-full mb-3" placeholder="Type your email"/>
 
-        <label for="password" class="block text-900 font-medium mb-2">Password</label>
-        <interview-inputtext v-model="password" id="password1" type="password" class="w-full mb-3"/>
+        <label for="password" class="block text-900 font-medium mb-2 text-left">Password</label>
+        <interview-input-text v-model="password" id="password1" type="password" class="input w-full mb-3" placeholder="Type your password"/>
 
         <interview-button
-        :label="submitButtonText"
-        type="submit"
-        icon="pi pi-user"
-        :loading="isLoading"
-        class="w-full"
+          :label="submitButtonText"
+          severity="secondary"
+          type="submit"
+          icon="pi pi-user"
+          :loading="isLoading"
+          class="form-btn"
         ></interview-button>
       </form>
     </div>
@@ -94,3 +95,11 @@ const submitForm = (): void => {
   }
 }
 </script>
+
+<style scoped>
+.surface-card {
+  background-color: var(--app-main-color);
+  border-radius: 10px;
+  text-align: center;
+}
+</style>

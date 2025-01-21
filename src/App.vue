@@ -21,7 +21,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <app-progress v-if="isLoading" />
+  <interview-progress
+    v-if="isLoading"
+    style="width: 50px; height: 50px"
+    strokeWidth="8"
+    fill="var(--surface-ground)"
+    animationDuration=".10s"
+    aria-label="Custom ProgressSpinner"
+  />
   <div v-else class="container">
     <app-header />
     <div class="content"><RouterView /></div>

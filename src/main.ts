@@ -19,6 +19,7 @@ import InputText from 'primevue/inputtext'
 import ToastService from 'primevue/toastservice'
 import Toast from 'primevue/toast'
 import ProgressSpinner from 'primevue/progressspinner'
+import Card from 'primevue/card'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -50,8 +51,9 @@ app.use(PrimeVue, {
 });
 app.component('interview-menu', Menubar)
 app.component('interview-button', Button)
-app.component('interview-inputtext', InputText)
-app.component('app-toast', Toast)
-app.component('app-progress', ProgressSpinner )
+app.component('interview-input-text', InputText)
+app.component('interview-toast', Toast)
+app.component('interview-progress', ProgressSpinner)
+app.component('interview-card', Card)
 
 app.mount('#app')
