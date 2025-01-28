@@ -31,6 +31,7 @@ body {
     border-radius: 10px;
   }
 
+  input,
   .input {
     width: 100%;
     border-radius: 10px;
@@ -41,6 +42,20 @@ body {
       border-color: var(--app-form-input-hover-color);
       box-shadow: 0 0 0 0.1rem var(--app-form-input-hover-color);
     }
+  }
+
+  .p-radiobutton {
+    &:hover,
+    &:focus {
+      .p-radiobutton-box {
+        border-color: var(--app-form-input-hover-color);
+      }
+    }
+  }
+
+  .p-radiobutton.p-highlight .p-radiobutton-box {
+    border-color: var(--app-heading-color);
+    background: var(--app-heading-color);
   }
 
   .interview-form {

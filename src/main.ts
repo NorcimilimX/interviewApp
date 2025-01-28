@@ -25,6 +25,10 @@ import Column from 'primevue/column'
 import ConfirmDialog from 'primevue/confirmdialog'
 import ConfirmationService from 'primevue/confirmationservice'
 import InlineMessage from 'primevue/inlinemessage'
+import InputNumber from 'primevue/inputnumber'
+import Textarea from 'primevue/textarea'
+import Calendar from 'primevue/calendar'
+import RadioButton from 'primevue/radiobutton'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -65,5 +69,9 @@ app.component('interview-data-table', DataTable)
 app.component('interview-columm', Column)
 app.component('interview-dialog', ConfirmDialog)
 app.component('interview-message', InlineMessage)
+app.component('interview-input-number', InputNumber)
+app.component('interview-textarea', Textarea)
+app.component('interview-calendar', Calendar)
+app.component('interview-radio', RadioButton)
 
 app.mount('#app')

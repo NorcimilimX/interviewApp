@@ -7,4 +7,12 @@ export interface IInterview {
   contactLinkedin?: string
   contactPhone?: string
   createdAt: Date
+  stages?: IStage
+  result: 'Refuse' | 'Offer'
+}
+
+export interface IStage {
+  name: string
+  date: string
+  description: string
 }

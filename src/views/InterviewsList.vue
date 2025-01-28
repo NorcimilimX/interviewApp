@@ -46,13 +46,19 @@
           </div>
         </template>
       </interview-columm>
-      <interview-columm>
+      <interview-columm header="Actions">
         <template #body="slotProps">
           <div class="flex justify-content-center gap-2">
             <router-link :to="`/interview/${slotProps.data.id}`">
-              <interview-button class="actions-btn pi pi-pencil" severity="warning" />
+              <interview-button class="actions-btn flex justify-content-center" severity="warning">
+                <div class="pi pi-pencil"></div>
+                <p>Edit</p>
+              </interview-button>
             </router-link>
-            <interview-button class="actions-btn pi pi-trash" severity="danger" @click="deleteInterviewRecord(slotProps.data.id)"/>
+            <interview-button class="actions-btn flex justify-content-center" severity="danger" @click="deleteInterviewRecord(slotProps.data.id)">
+              <div class="pi pi-trash"></div>
+              <p>Delete</p>
+            </interview-button>
           </div>
         </template>
       </interview-columm>
@@ -144,5 +150,12 @@ onMounted( () => {
 }
 .actions-btn {
   border-radius: 10px;
+  gap: 5px;
+  min-width: 100px;
+  height: 40px;
+}
+
+a {
+  text-decoration: none;
 }
 </style>
