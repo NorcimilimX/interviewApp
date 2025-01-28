@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { getAuth } from 'firebase/auth'
 import { getFirestore, setDoc, doc } from 'firebase/firestore'
 import type { IInterview } from '@/interfaces'
 import { v4 as uuidv4 } from 'uuid'
+import { useUserStore } from '@/stores/userStore'
 
+const userStore = useUserStore()
 const router = useRouter()
 const company = ref<string>('')
 const vacancyLink = ref('')
@@ -29,9 +30,8 @@ const addNewInterview = async (): Promise<void> => {
     createdAt: new Date()
   }
 
-  const userId = getAuth().currentUser?.uid
-  if (userId) {
-    await setDoc(doc(getFirestore(), `users/${userId}/interviews`, payload.id), payload)
+  if (userStore.userId) {
+    await setDoc(doc(getFirestore(), `users/${userStore.userId}/interviews`, payload.id), payload)
       .then(() => {
         router.push('/list')
       })
@@ -64,7 +64,6 @@ const clearInterviewForm = () => {
 </script>
 
 <template>
-  <h4>Pinia Vue TypeScript<br> All in Interview APP</h4>
   <div class="interview-form">
     <interview-card>
       <template #title>
