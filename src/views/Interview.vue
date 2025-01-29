@@ -37,7 +37,6 @@ const getData = async (): Promise<void> => {
   }
 
   isLoading.value = false
-  console.log(interview.value)
 }
 
 const saveInterview = async (): Promise<void> => {
@@ -111,14 +110,14 @@ onMounted(async () => await getData())
           <div class="flex-auto">
             <interview-input-number
               inputId="salaryFrom"
-              placeholder="Salary from"
+              placeholder="Salary from ($usd)"
               v-model="interview.salaryFrom"
             />
           </div>
           <div class="flex-auto">
             <interview-input-number
               inputId="salaryTo"
-              placeholder="Salary to"
+              placeholder="Salary to ($usd)"
               v-model="interview.salaryTo"
             />
           </div>

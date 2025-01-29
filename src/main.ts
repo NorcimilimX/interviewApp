@@ -29,6 +29,8 @@ import InputNumber from 'primevue/inputnumber'
 import Textarea from 'primevue/textarea'
 import Calendar from 'primevue/calendar'
 import RadioButton from 'primevue/radiobutton'
+import Badge from 'primevue/badge'
+import Tooltip from 'primevue/tooltip'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -59,6 +61,9 @@ app.use(PrimeVue, {
     }
   }
 });
+
+app.directive('interview-tooltip', Tooltip)
+
 app.component('interview-menu', Menubar)
 app.component('interview-button', Button)
 app.component('interview-input-text', InputText)
@@ -73,5 +78,6 @@ app.component('interview-input-number', InputNumber)
 app.component('interview-textarea', Textarea)
 app.component('interview-calendar', Calendar)
 app.component('interview-radio', RadioButton)
+app.component('interview-badge', Badge)
 
 app.mount('#app')

@@ -11,7 +11,7 @@
       <interview-columm field="hrName" header="Hr Name"></interview-columm>
       <interview-columm field="vacancyLink" header="Vacancy">
         <template #body="slotProps">
-          <a :href="slotProps.data.vacancyLink" target="_blank">{{ slotProps.data.vacancyLink }}</a>
+          <a :href="slotProps.data.vacancyLink" target="_blank">Vacancy link</a>
         </template>
       </interview-columm>
       <interview-columm header="Contacts">
@@ -46,6 +46,52 @@
           </div>
         </template>
       </interview-columm>
+      <interview-columm header="Interview stages">
+        <template #body="slotProps">
+          <span v-if="!slotProps.data.stages">
+            <interview-badge
+              severity="info"
+              class="flex justify-content-center"
+              value="Not defined"
+              v-interview-tooltip="`There is any finished stage for now`"
+            />
+          </span>
+          <div v-else class="interview-stages">
+            <interview-badge
+              v-for="(stage, i) in slotProps.data.stages"
+              :key="i"
+              severity="info"
+              class="flex gap-1"
+              rounded
+              v-interview-tooltip="stage.description"
+            >
+              <span>{{i+1}}</span>
+              <span>{{stage.name}}</span>
+            </interview-badge>
+          </div>
+        </template>
+      </interview-columm>
+      <interview-columm header="Salary range">
+        <template #body="slotProps">
+          <span class="salary-cell" v-if="!slotProps.data.salaryTo">Not defined</span>
+          <span class="salary-cell" v-else>{{ slotProps.data.salaryFrom + ' -- ' + slotProps.data.salaryTo + '$' }}</span>
+        </template>
+      </interview-columm>
+      <interview-columm header="Interview Result">
+        <template #body="slotProps">
+          <span v-if="!slotProps.data.result" class="flex justify-content-center">
+            <interview-badge severity="warning" value="Pending"/>
+          </span>
+          <template v-else>
+            <span class="flex justify-content-center">
+              <interview-badge
+                :severity="slotProps.data.result === 'Offer' ? 'success' : 'danger'"
+                :value="slotProps.data.result === 'Offer' ? 'Offer' : 'Refuse'"
+              />
+            </span>
+          </template>
+        </template>
+      </interview-columm>
       <interview-columm header="Actions">
         <template #body="slotProps">
           <div class="flex justify-content-center gap-2">
@@ -71,6 +117,7 @@ import { ref, onMounted} from 'vue'
 import { useUserStore } from '@/stores/userStore'
 import type { IInterview} from '@/interfaces'
 import { useConfirm } from 'primevue/useconfirm'
+import dayjs from 'dayjs'
 import {
   getFirestore,
   collection,
@@ -145,14 +192,19 @@ onMounted( () => {
   font-size: 25px;
 }
 .interview-stages {
-  display: flex;
+  display: grid;
   gap: 5px;
+  justify-content: center;
+  justify-items: center;
 }
 .actions-btn {
   border-radius: 10px;
   gap: 5px;
   min-width: 100px;
   height: 40px;
+}
+.salary-cell {
+  min-width: 100px;
 }
 
 a {
