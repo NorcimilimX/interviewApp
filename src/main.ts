@@ -31,6 +31,7 @@ import Calendar from 'primevue/calendar'
 import RadioButton from 'primevue/radiobutton'
 import Badge from 'primevue/badge'
 import Tooltip from 'primevue/tooltip'
+import Chart from 'primevue/chart'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -79,5 +80,6 @@ app.component('interview-textarea', Textarea)
 app.component('interview-calendar', Calendar)
 app.component('interview-radio', RadioButton)
 app.component('interview-badge', Badge)
+app.component('interview-chart', Chart)
 
 app.mount('#app')

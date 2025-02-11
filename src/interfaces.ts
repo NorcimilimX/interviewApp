@@ -8,7 +8,7 @@ export interface IInterview {
   contactPhone?: string
   createdAt: Date
   stages?: IStage
-  result: 'Refuse' | 'Offer'
+  result?: 'Refuse' | 'Offer'
 }
 
 export interface IStage {

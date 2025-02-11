@@ -6,6 +6,30 @@
   </interview-message>
   <div v-else>
     <h1>List of interviews</h1>
+
+    <div class="flex align-items-center mb-5">
+      <div class="flex align-items-center mr-2">
+        <interview-radio
+          inputId="interviewResult1"
+          name="result"
+          value="Refusal"
+          v-model="selectedFilterResult"
+        />
+        <label for="interviewResult1" class="ml-2">Refuse</label>
+      </div>
+      <div class="flex align-items-center mr-2">
+        <interview-radio
+          inputId="interviewResult2"
+          name="result"
+          value="Offer"
+          v-model="selectedFilterResult"
+        />
+        <label for="interviewResult2" class="ml-2">Offer</label>
+      </div>
+      <interview-button class="form-btn mr-2" @click="submitFilter()" :disabled="!selectedFilterResult">Apply</interview-button>
+      <interview-button class="form-btn" severity="danger" :disabled="!selectedFilterResult" @click="clearFilter()">Clear*</interview-button>
+    </div>
+
     <interview-data-table :value="interviews" stripedRows showGridlines tableStyle="min-width: 50rem">
       <interview-columm field="company" header="Company"></interview-columm>
       <interview-columm field="hrName" header="Hr Name"></interview-columm>
@@ -73,8 +97,8 @@
       </interview-columm>
       <interview-columm header="Salary range">
         <template #body="slotProps">
-          <span class="salary-cell" v-if="!slotProps.data.salaryTo">Not defined</span>
-          <span class="salary-cell" v-else>{{ slotProps.data.salaryFrom + ' -- ' + slotProps.data.salaryTo + '$' }}</span>
+          <span v-if="!slotProps.data.salaryTo">Not defined</span>
+          <span v-else>{{ slotProps.data.salaryFrom + ' -- ' + slotProps.data.salaryTo + '$' }}</span>
         </template>
       </interview-columm>
       <interview-columm header="Interview Result">
@@ -117,7 +141,6 @@ import { ref, onMounted} from 'vue'
 import { useUserStore } from '@/stores/userStore'
 import type { IInterview} from '@/interfaces'
 import { useConfirm } from 'primevue/useconfirm'
-import dayjs from 'dayjs'
 import {
   getFirestore,
   collection,
@@ -125,7 +148,8 @@ import {
   orderBy,
   getDocs,
   deleteDoc,
-  doc
+  doc,
+  where
 } from 'firebase/firestore'
 
 const db = getFirestore()
@@ -133,6 +157,7 @@ const userStore = useUserStore()
 const interviews = ref<IInterview[]>([])
 const isLoading = ref<boolean>(true)
 const confirm = useConfirm()
+const selectedFilterResult = ref<string>('')
 
 const deleteInterviewRecord = async (id: string): Promise<void> => {
   confirm.require({
@@ -147,27 +172,55 @@ const deleteInterviewRecord = async (id: string): Promise<void> => {
       isLoading.value = true
       await deleteDoc(doc(db, `users/${userStore.userId}/interviews`, id))
 
-      await loadInterviews()
+      const listIntervies: Array<IInterview> = await getInterviews()
+      interviews.value = [...listIntervies]
+
       isLoading.value = false
     },
   })
 }
 
-const getInterviews = async <T extends IInterview>(): Promise<T[]> => {
-  const getData = query(collection(db, `users/${userStore.userId}/interviews`), orderBy('createdAt', 'desc'))
+const submitFilter = async (): Promise<void> => {
+  isLoading.value = true
+  const listInterviews: Array<IInterview> = await getInterviews(true)
+  interviews.value = listInterviews
+  isLoading.value = false
+}
+
+const clearFilter = async (): Promise<void> => {
+  isLoading.value = true
+  const listInterviews: Array<IInterview> = await getInterviews()
+  interviews.value = listInterviews
+  selectedFilterResult.value = ''
+  isLoading.value = false
+}
+
+const getInterviews = async <T extends IInterview>(isFilter?: boolean): Promise<T[]> => {
+  let getData
+
+  if (isFilter) {
+    getData = query(
+      collection(db, `users/${userStore.userId}/interviews`),
+      orderBy('createdAt', 'desc'),
+      where('result', '==', selectedFilterResult.value)
+    )
+  } else {
+    getData = query(
+      collection(db, `users/${userStore.userId}/interviews`),
+      orderBy('createdAt', 'desc')
+    )
+  }
 
   const listDocs = await getDocs(getData)
 
   return listDocs.docs.map((doc) => doc.data() as T)
 }
 
-const loadInterviews = async () => {
+onMounted(async () => {
   const listInterviews: Array<IInterview> = await getInterviews()
-  interviews.value = [...listInterviews]
-}
 
-onMounted( () => {
-  loadInterviews()
+  interviews.value = listInterviews
+
   isLoading.value = false
 })
 </script>
@@ -202,9 +255,6 @@ onMounted( () => {
   gap: 5px;
   min-width: 100px;
   height: 40px;
-}
-.salary-cell {
-  min-width: 100px;
 }
 
 a {
